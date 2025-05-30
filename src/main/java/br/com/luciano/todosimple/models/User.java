@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -38,6 +39,7 @@ public class User {
 	@Column(length = 12, nullable = false)
 	private String password;
 	
+	@OneToMany(mappedBy = "user")
 	private List<Task> tasks = new ArrayList<>();
 	
 	public User() {
