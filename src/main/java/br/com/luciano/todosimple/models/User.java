@@ -18,6 +18,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+/* A entidade é uma classe que representa uma tabela no 
+ * banco de dados. Normalmente, usamos anotações do JPA
+ * (Java Persistence API) para mapear essa classe.*/
 @Entity
 @Table(name = "tb_user")
 public class User {
