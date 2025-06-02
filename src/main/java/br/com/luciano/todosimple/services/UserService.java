@@ -23,6 +23,9 @@ public class UserService {
 				+ ", Tipo: " + User.class.getName()));
 	}
 	
+	/* @Transactional nos métodos que precisam de transação, por exemplo: salvar, alterar, 
+	 * excluir, etc., pois assim você garante que eles vão ser executados dentro um contexto
+	 * transacional e o rollback será feito caso ocorra algum erro.*/
 	@Transactional
 	public User create(User obj) {
 		obj.setId(null);
