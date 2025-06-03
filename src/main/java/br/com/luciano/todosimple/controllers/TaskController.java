@@ -17,29 +17,34 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.luciano.todosimple.models.Task;
 import br.com.luciano.todosimple.services.TaskService;
+import br.com.luciano.todosimple.services.UserService;
 
 @RestController
 @RequestMapping("/task")
 public class TaskController {
 	
 	@Autowired
-	private TaskService service;
+	private TaskService taskService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Task> findById(@PathVariable Long id) {
-		Task obj = this.service.findById(id);
+		Task obj = this.taskService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@GetMapping("/user/{userId}")
 	public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userId) {
-		List<Task> objs = this.service.findAllByUserId(userId);
+		this.userService.findById(userId);
+		List<Task> objs = this.taskService.findAllByUserId(userId);
 		return ResponseEntity.ok().body(objs);
 	}
 	
 	@PostMapping
 	public ResponseEntity<Void> create(@RequestBody Task obj) {
-		this.service.create(obj);
+		this.taskService.create(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
@@ -48,13 +53,13 @@ public class TaskController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@RequestBody Task obj, @PathVariable Long id) {
 		obj.setId(id);
-		obj = this.service.update(obj);
+		obj = this.taskService.update(obj);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		this.service.delete(id);
+		this.taskService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
