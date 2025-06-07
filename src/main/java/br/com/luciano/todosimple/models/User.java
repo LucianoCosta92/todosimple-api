@@ -30,7 +30,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	@NotNull(message = "Nome é obrigatório")
 	@NotBlank
 	@Size(min = 2, max = 100)
 	@Column(length = 100, nullable = false, unique = true)
@@ -38,7 +38,7 @@ public class User {
 	
 	@JsonProperty(access = Access.WRITE_ONLY) // apenas escrita
 	@NotNull
-	@NotBlank
+	@NotBlank(message = "Senha é obrigatória")
 	@Size(min = 6, max = 12)
 	@Column(length = 12, nullable = false)
 	private String password;

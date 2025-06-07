@@ -20,7 +20,7 @@ import br.com.luciano.todosimple.services.TaskService;
 import br.com.luciano.todosimple.services.UserService;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/tasks")
 public class TaskController {
 	
 	@Autowired
@@ -28,6 +28,12 @@ public class TaskController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@GetMapping
+	public ResponseEntity<List<Task>> findAll() {
+		List<Task> list = this.taskService.findAll();
+		return ResponseEntity.ok().body(list);
+	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Task> findById(@PathVariable Long id) {
