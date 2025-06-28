@@ -18,10 +18,12 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Transactional(readOnly = true)
 	public List<User> findAll() {
 		return this.userRepository.findAll();
 	}
 	
+	@Transactional(readOnly = true)
 	public User findById(Long id) {
 		Optional<User> optional = this.userRepository.findById(id);
 		return optional.orElseThrow(() -> new RuntimeException("Usuário não encontrado! Id: " + id

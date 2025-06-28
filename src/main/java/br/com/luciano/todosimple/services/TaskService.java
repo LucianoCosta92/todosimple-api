@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.luciano.todosimple.models.Task;
 import br.com.luciano.todosimple.models.User;
 import br.com.luciano.todosimple.repositories.TaskRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TaskService {
@@ -20,18 +20,20 @@ public class TaskService {
 	@Autowired
 	private UserService userService;
 	
+	@Transactional(readOnly = true)
 	public List<Task> findAll() {
 		return this.taskRepository.findAll();
 	}
 	
+	@Transactional(readOnly = true)
 	public Task findById(Long id) {
 		Optional<Task> task = this.taskRepository.findById(id);
 		return task.orElseThrow(() -> new RuntimeException("Tarefa não encontrada! Id: " + id));
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Task> findAllByUserId(Long userId) {
-		List<Task> tasks = this.taskRepository.findByUser_Id(userId);
-		return tasks;
+		return this.taskRepository.findByUser_Id(userId);
 	}
 	
 	@Transactional
@@ -50,6 +52,7 @@ public class TaskService {
 		return this.taskRepository.save(newObj);
 	}
 	
+	@Transactional
 	public void delete(Long id) {
 		findById(id);
 		try {
